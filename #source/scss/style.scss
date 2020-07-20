@@ -1,0 +1,55 @@
+@import "nullstyle.scss";   //обнуление
+@import "footerstyle.scss"; //футер стили
+@import "headerstyle.scss"; //шапка стили
+
+$fz:10px; //переменная
+$color1:green;
+$color2:red;
+
+%tplborder{ //шаблон
+    font-size: 30px !important;
+    margin-top: 40px;
+}
+.tplborder{ //класс шаблон
+    font-size: 30px !important;
+    margin-top: 40px;
+}
+
+
+@mixin fontz($f, $m) {
+    font-size: $f ;
+    margin-bottom: $m;
+}
+
+.block{ 
+    width: 300px / 960px * 100%; //математика
+    background-color: slategray;
+    font-size: $fz;
+    line-height: 20px;
+    >p{
+        color: $color2;
+        &:hover{            //p:hover (&-обращение к родителю)
+            color: $color1;
+        }
+    }
+    .block__text{
+        font-size: $fz;
+        span{ 
+            color: $color1;
+        }    
+    }
+    h3{  //миксин
+        @include  fontz(50px, 30px)
+    }
+    
+}
+p{
+    .block &{   //удобно обрабатывать p внутри определенных классов
+        color:orange;
+    }
+
+    @extend %tplborder; //подключили шаблон через @extend для <p>
+    @extend .tplborder; //подключили класс-шаблон через @extend для <p>
+    //отличия в том что один добавляет класс со свойствами в css, а второй просто свойства к выбранному классу 
+}
+
